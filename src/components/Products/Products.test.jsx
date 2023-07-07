@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 test('renders product card', () => {
   render(
     <Provider store={store}>
-      <Products chosenCategory={0} />
+      <Products />
     </Provider>
   );
 

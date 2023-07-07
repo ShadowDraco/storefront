@@ -11,6 +11,7 @@ export default function Cart() {
 
   return (
     <Box
+    data-testid='CART'
       position='fixed'
       color='primary'
       sx={{

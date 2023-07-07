@@ -17,6 +17,8 @@ test('renders selected product card', () => {
     </Provider>
   );
 
-  const cardElement = screen.getByText(/See all the things/i);
+  const cardElement = screen.getByText(/TV/i);
+  const relatedElement = screen.getByText(/Related Items/i);
   expect(cardElement).toBeInTheDocument();
+  expect(relatedElement).toBeInTheDocument();
 });
