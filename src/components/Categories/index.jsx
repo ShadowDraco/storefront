@@ -1,16 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { chooseCategory } from '../../redux/reducers/categories';
 
 import { ButtonGroup, Button, Box, Typography, Container } from '@mui/material';
 
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
-export default function Categories({ setChosenCategory }) {
+export default function Categories() {
+  const chosenCategory = useSelector(state => state.categories.chosenCategory);
   const categories = useSelector(state => state.categories);
-  const [categoryString, setCategoryString] = useState('ELECTRONICS');
-  const [categoryDescription, setCategoryDescription] = useState(
-    'Tvs, laptops and more!'
-  );
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -20,18 +18,24 @@ export default function Categories({ setChosenCategory }) {
           variant='text'
           aria-label='text button group'
         >
-          {categories.map((product, i) => {
-            let entries = Object.entries(product);
-            return (
+          {Object.entries(categories).map((category, i) => {
+            return category[0] === 'chosenCategory' ? (
+              ''
+            ) : (
               <Button
+                id={chosenCategory.index === i ? 'active' : ''}
                 key={i}
                 onClick={() => {
-                  setChosenCategory(i);
-                  setCategoryString(Object.keys(categories[i]));
-                  setCategoryDescription(Object.values(categories[i]));
+                  dispatch(
+                    chooseCategory({
+                      index: i,
+                      string: category[0],
+                      description: category[1],
+                    })
+                  );
                 }}
               >
-                {entries[0][0]}
+                {category[0]}
               </Button>
             );
           })}
@@ -43,20 +47,16 @@ export default function Categories({ setChosenCategory }) {
           mt={8}
           data-testid='CATEGORY'
         >
-          {categoryString}
+          {chosenCategory.string}
         </Typography>
         <Typography
           variant='h6'
           color='darkgray'
           mb={8}
         >
-          {categoryDescription}
+          {chosenCategory.description}
         </Typography>
       </Container>
     </>
   );
 }
-
-Categories.propTypes = {
-  setChosenCategory: PropTypes.func,
-};

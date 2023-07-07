@@ -1,36 +1,47 @@
-export const initialProducts = [
-  {
-    ELECTRONICS: {
-      TV: {
-        description: 'See all the things',
-        url: 'https://source.unsplash.com/random?tv',
-      },
-
-      Macbook: {
-        description: 'Do all the things',
-        url: 'https://source.unsplash.com/random?macbook',
-      },
+export const initialProducts = {
+  ELECTRONICS: [
+    {
+      name: 'TV',
+      description: 'See all the things',
+      url: `${import.meta.env.VITE_UNSPLASH_URL}tv`,
+      price: 600,
+      inventory: Math.floor(Math.random() * 20) + 10,
     },
-  },
-  {
-    FOOD: {
-      Potato: {
-        description: 'versatile!',
-        url: 'https://source.unsplash.com/random?potato',
-      },
 
-      Carrot: {
-        description: 'want good eyesight?',
-        url: 'https://source.unsplash.com/random?carrot',
-      },
+    {
+      name: 'Macbook',
+      description: 'Do all the things',
+      url: `${import.meta.env.VITE_UNSPLASH_URL}macbook`,
+      price: 1400,
+      inventory: Math.floor(Math.random() * 20) + 5,
     },
-  },
-];
+  ],
+  FOOD: [
+    {
+      name: 'Potato',
+      description: 'versatile!',
+      url: `${import.meta.env.VITE_UNSPLASH_URL}potato`,
+      price: 6,
+      inventory: Math.floor(Math.random() * 100) + 10,
+    },
+
+    {
+      name: 'Carrot',
+      description: 'want good eyesight?',
+      url: `${import.meta.env.VITE_UNSPLASH_URL}carrot`,
+      price: 4,
+      inventory: Math.floor(Math.random() * 100) + 20,
+    },
+  ],
+};
 
 export const products = (state = initialProducts, action) => {
   switch (action.type) {
     case 'updateProducts':
       return [...state, action.payload];
+    case 'selectProduct':
+      console.log('Selecting product', action);
+      return state;
     default:
       return state;
   }

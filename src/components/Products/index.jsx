@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -11,22 +11,28 @@ import {
   Typography,
   Box,
 } from '@mui/material';
+import { setCurrentProduct } from '../../redux/reducers/currentProduct';
+import { addToCart } from '../../redux/reducers/cart';
 
-export default function Products({ chosenCategory }) {
-  const products = useSelector(state => state.products[chosenCategory]);
-
-  const mappableProducts = Object.entries(Object.entries(products)[0][1]);
+export default function Products() {
+  const chosenCategory = useSelector(state => state.categories.chosenCategory);
+  const products = useSelector(state => state.products);
+  const dispatch = useDispatch();
 
   return (
-    <Box mt={6}>
+    <Box
+      mt={6}
+      mb={6}
+    >
       <Container sx={{ display: 'flex', gap: 5 }}>
-        {mappableProducts.map((product, i) => {
+        {Object.entries(products)[chosenCategory.index][1].map((product, i) => {
           return (
             <Card key={i}>
               <CardMedia
+                component='img'
                 sx={{ height: 120 }}
-                image={product[1].url}
-                title='green iguana'
+                image={product.url}
+                title={product.name}
               />
               <CardContent>
                 <Typography
@@ -34,18 +40,32 @@ export default function Products({ chosenCategory }) {
                   variant='h6'
                   component='div'
                 >
-                  {product[0]}
+                  {product.name}
                 </Typography>
                 <Typography
                   variant='caption'
                   color='text.secondary'
                 >
-                  {product[1].description}
+                  {product.description}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size='small'>ADD TO CART</Button>
-                <Button size='small'>VIEW DETAILS</Button>
+                <Button
+                  size='small'
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                  }}
+                >
+                  ADD TO CART
+                </Button>
+                <Button
+                  size='small'
+                  onClick={() => {
+                    dispatch(setCurrentProduct(product));
+                  }}
+                >
+                  VIEW DETAILS
+                </Button>
               </CardActions>
             </Card>
           );
@@ -54,7 +74,3 @@ export default function Products({ chosenCategory }) {
     </Box>
   );
 }
-
-Products.propTypes = {
-  chosenCategory: PropTypes.number,
-};

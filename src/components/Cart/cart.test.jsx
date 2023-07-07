@@ -1,15 +1,15 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Header from '../Header';
+import Cart from '.';
 
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
-test('renders Header links', () => {
+test('renders cart', () => {
   render(
     <Provider store={store}>
-      <Header />
+      <Cart />
     </Provider>
   );
 
-  const headerElement = screen.getByText(/OUR STORE/i);
-  expect(headerElement).toBeInTheDocument();
+  const cartElement = screen.getByTestId('CART');
+  expect(cartElement).toBeInTheDocument();
 });
