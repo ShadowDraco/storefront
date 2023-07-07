@@ -6,8 +6,9 @@
 
 ## Links and Resources
 
-[Code sand box][]
-![Lab 36 UML](../assets/Lab36.png)
+[Code sand box](https://codesandbox.io/p/github/ShadowDraco/storefront/main?workspaceId=a3383399-bf2b-4cb1-9efa-c698b2303ac8)
+![Lab 36 UML](./assets/Lab36.png)
+![Lab 37 UML](./assets/Lab37.png)
 
 ### What is this
 
@@ -26,6 +27,15 @@
   - Identify that category as selected (change of class/display).
   - Show a list of products associated with the category.
 
+### Phase 2 Requirements
+
+Add the "Add to Cart" feature to our application, which will allow our users to not only browse items in the store, but also select them and have them persist in their "shopping cart" for later purchase.
+
+- As a user, I want to choose from products in the list and add them to my shopping cart.
+- As a user, I want to see the products that I've added to my shopping cart in a growing list on the side of the page".
+- As a user, I want to change the quantity of items I intend to purchase in the header. i.e. CART (1)
+- As a user, I want to be able to remove an item from my shopping cart.
+
 ### Application Architecture
 
 Virtual Store application using Vite, Material UI, and React-redux:
@@ -37,8 +47,10 @@ Virtual Store application using Vite, Material UI, and React-redux:
   - Dispatches an action when one is clicked to "activate" it.
 - A `<Products />` component:
   - Displays a list of products associated with the selected category.
+- A `<SimpleCart />` component:
+  - Displays a short list (title only) of products in the cart.
+    This should be present at all times.
 
 ### Testing
 
-- Testing for the core behaviors (user stories) of the application is required.
-- Consider leveraging a chatbot as needed.
+- Tests are accomplished by using Vitest and react testing library.

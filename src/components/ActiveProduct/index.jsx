@@ -35,6 +35,7 @@ export default function ActiveProduct({ product }) {
           <Card
             sx={{
               width: '70%',
+              maxWidth: 600,
             }}
             variant='outlined'
           >
@@ -61,7 +62,7 @@ export default function ActiveProduct({ product }) {
         <Button
           className='blue'
           variant='primary'
-          sx={{ width: '70%' }}
+          sx={{ width: '70%', maxWidth: 600 }}
         >
           BUY
         </Button>
@@ -70,6 +71,7 @@ export default function ActiveProduct({ product }) {
             marginLeft: '12%',
             marginTop: 3,
             width: '70%',
+            maxWidth: 600,
             textAlign: 'left',
           }}
         >
