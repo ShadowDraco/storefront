@@ -4,6 +4,7 @@ import { setCurrentProduct } from '../../redux/reducers/currentProduct';
 
 export default function Header() {
   const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart);
   return (
     <>
       <AppBar
@@ -14,7 +15,7 @@ export default function Header() {
           sx={{ display: 'flex', justifyContent: 'space-between', flexGrow: 1 }}
         >
           <Typography
-          id='OURSTORE'
+            id='OURSTORE'
             variant='h4'
             onClick={() => {
               dispatch(setCurrentProduct({}));
@@ -22,7 +23,7 @@ export default function Header() {
           >
             OUR STORE
           </Typography>
-          <Button color='inherit'>Cart (1)</Button>
+          <Button color='inherit'>Cart ({cart.length})</Button>
         </Toolbar>
       </AppBar>
     </>

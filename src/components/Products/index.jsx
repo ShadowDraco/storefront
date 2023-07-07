@@ -12,6 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import { setCurrentProduct } from '../../redux/reducers/currentProduct';
+import { addToCart } from '../../redux/reducers/cart';
 
 export default function Products() {
   const chosenCategory = useSelector(state => state.categories.chosenCategory);
@@ -49,7 +50,14 @@ export default function Products() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size='small'>ADD TO CART</Button>
+                <Button
+                  size='small'
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                  }}
+                >
+                  ADD TO CART
+                </Button>
                 <Button
                   size='small'
                   onClick={() => {

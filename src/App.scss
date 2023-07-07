@@ -22,3 +22,16 @@ button.blue {
   background-color: $buttonBlue;
   color: white;
 }
+
+svg.trashButton {
+  background-color: $backgroundColor;
+}
+
+svg.trashButton:hover {
+  background-color: darken($backgroundColor, 5);
+}
+
+ul {
+  background-color: darken($backgroundColor, 2);
+  border-bottom: 5px gray dashed;
+}

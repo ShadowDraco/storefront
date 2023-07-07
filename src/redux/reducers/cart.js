@@ -1,11 +1,15 @@
-export const initialCart = {};
+export const initialCart = [];
 
 const cart = (state = initialCart, action) => {
   switch (action.type) {
     case 'add':
-      return state;
+      return [...state, action.payload];
     case 'remove':
-      return state;
+      const stateCopy = [...state];
+      const newState = stateCopy.filter(
+        item => item.name !== action.payload.name
+      );
+      return newState;
     default:
       return state;
   }

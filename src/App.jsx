@@ -10,6 +10,7 @@ import ActiveProduct from './components/ActiveProduct';
 import { Box, Container } from '@mui/material';
 
 import { useSelector } from 'react-redux';
+import Cart from './components/Cart';
 
 function App() {
   const currentProduct = useSelector(state => state.currentProduct);
@@ -18,6 +19,7 @@ function App() {
     <Box>
       <Header />
       <Container>
+        <Cart />
         {!currentProduct.name ? (
           <>
             <Categories />
