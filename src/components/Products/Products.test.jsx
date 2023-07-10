@@ -10,6 +10,6 @@ test('renders product card', () => {
     </Provider>
   );
 
-  const cardElement = screen.getByText(/See all the things/i);
+  const cardElement = screen.getByTestId('PRODUCTS');
   expect(cardElement).toBeInTheDocument();
 });

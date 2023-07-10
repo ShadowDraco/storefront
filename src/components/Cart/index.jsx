@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentProduct } from '../../redux/reducers/currentProduct';
 import { Box, List, ListItem } from '@mui/material';
 import { removeFromCart } from '../../redux/reducers/cart';
+import {
+  asyncUpdateProduct,
+  updateProduct,
+} from '../../redux/reducers/products';
 import Delete from '@mui/icons-material/Delete';
 
 export default function Cart() {
@@ -11,7 +15,7 @@ export default function Cart() {
 
   return (
     <Box
-    data-testid='CART'
+      data-testid='CART'
       position='fixed'
       color='primary'
       sx={{
@@ -48,7 +52,14 @@ export default function Cart() {
               </ListItem>
               <Delete
                 className='trashButton'
-                onClick={() => dispatch(removeFromCart(item))}
+                onClick={() => {
+                  dispatch(removeFromCart(item));
+                  let newItem = { ...item };
+                  newItem.inStock = newItem.inStock + 1;
+                  dispatch(asyncUpdateProduct(newItem)).then(data =>
+                    dispatch(updateProduct(data))
+                  );
+                }}
               />
             </Box>
           );

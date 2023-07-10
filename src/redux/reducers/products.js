@@ -10,12 +10,18 @@ export const initialProducts = {
   loading: true,
 };
 
+export const updateProduct = createAction('updateProduct');
 export const updateProducts = createAction('updateProducts');
 export const getProducts = createAction('getProducts');
 
 export const products = createReducer(initialProducts, {
-  [updateProducts]: (state, action) => {
-    return [...state, action.payload];
+  [updateProduct]: (state, action) => {
+    let newState = [...state].map(item => {
+      if (item._id == action.payload.payload._id) return action.payload.payload;
+      return item;
+    });
+
+    return newState;
   },
 
   [getProducts]: (state, action) => {
@@ -28,5 +34,16 @@ export const fetchProducts = createAsyncThunk(getProducts, async () => {
 
   return response.data;
 });
+
+export const asyncUpdateProduct = createAsyncThunk(
+  updateProduct,
+  async item => {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}/products/${item._id}`,
+      { inStock: item.inStock }
+    );
+    return response.data;
+  }
+);
 
 export default products;

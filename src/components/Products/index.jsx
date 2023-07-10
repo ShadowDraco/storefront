@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  asyncUpdateProduct,
   fetchProducts,
   getProducts,
-  updateProducts,
+  updateProduct,
 } from '../../redux/reducers/products';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -37,10 +38,14 @@ export default function Products() {
       mt={6}
       mb={6}
     >
-      <Container sx={{ display: 'flex', gap: 5 }}>
+      <Container
+        data-testid='PRODUCTS'
+        sx={{ display: 'flex', gap: 5, justifyContent: 'center' }}
+      >
         {products?.length > 0 ? (
           products.map((product, i) => {
-            return product.category === categories[chosenCategory].name ? (
+            return product.category === categories[chosenCategory].name &&
+              product.inStock > 0 ? (
               <Card key={i}>
                 <CardMedia
                   component='img'
@@ -68,6 +73,11 @@ export default function Products() {
                     size='small'
                     onClick={() => {
                       dispatch(addToCart(product));
+                      let item = { ...product };
+                      item.inStock = item.inStock - 1;
+                      dispatch(asyncUpdateProduct(item)).then(data =>
+                        dispatch(updateProduct(data))
+                      );
                     }}
                   >
                     ADD TO CART

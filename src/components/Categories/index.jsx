@@ -16,7 +16,9 @@ export default function Categories() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategories()).then(data => {
+      dispatch(updateCategories(data));
+    });
   }, []);
 
   return (
@@ -36,7 +38,7 @@ export default function Categories() {
                   dispatch(chooseCategory(i));
                 }}
               >
-                {category.name}
+                {`${category.name}`.toUpperCase()}
               </Button>
             );
           })}
@@ -44,11 +46,12 @@ export default function Categories() {
       </Box>
       <Container sx={{ textAlign: 'center' }}>
         <Typography
-          variant='h3'
+          variant='h2'
           mt={8}
+          gutterBottom
           data-testid='CATEGORY'
         >
-          {categories[chosenCategory].name}
+          {categories[chosenCategory].name.toUpperCase()}
         </Typography>
         <Typography
           variant='h6'

@@ -36,6 +36,13 @@ Add the "Add to Cart" feature to our application, which will allow our users to 
 - As a user, I want to change the quantity of items I intend to purchase in the header. i.e. CART (1)
 - As a user, I want to be able to remove an item from my shopping cart.
 
+### Phase 3 Requirements
+
+Connecting the Virtual Store to a live API so that data is persistent and able to be separately managed.
+
+- As a user, I want to interact with live inventory so that I have confidence that the displayed products are in stock.
+- As a user, I want to know to that when I add an item to my cart, that it is removed from inventory so that no other users can purchase it.
+
 ### Application Architecture
 
 Virtual Store application using Vite, Material UI, and React-redux:

@@ -17,21 +17,22 @@ export const updateCategories = createAction('updateCategories');
 
 export const categories = createReducer(initialCategories, {
   [updateCategories]: (state, action) => {
-    return action.payload;
+    return action.payload.payload.results;
   },
 });
 
 export const chosenCategory = createReducer(initialChosenCategory, {
   [chooseCategory]: (state, action) => {
-    console.log(action);
     return action.payload;
   },
 });
 
-export const fetchCategories = createAsyncThunk(updateCategories, async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_API_URL}/categories`
-  );
-  console.log(response.data);
-  return response.data;
-});
+export const fetchCategories = createAsyncThunk(
+  'updateCategories',
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/categories`
+    );
+    return response.data;
+  }
+);
