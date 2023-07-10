@@ -1,16 +1,37 @@
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
 
 import {
   Container,
   Card,
-  CardActions,
   CardMedia,
   CardContent,
   Button,
   Typography,
   Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Paper,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import { addToCart } from '../../redux/reducers/cart';
+import {
+  asyncUpdateProduct,
+  updateProduct,
+} from '../../redux/reducers/products';
+
+const Item = styled(Paper)(() => ({
+  textAlign: 'center',
+  height: 60,
+  minWidth: 'fit-content',
+  lineHeight: '60px',
+  padding: 3,
+  paddingLeft: 10,
+  paddingRight: 20,
+}));
 
 export default function ActiveProduct({ product }) {
   const currentProduct = product
@@ -42,7 +63,9 @@ export default function ActiveProduct({ product }) {
             <CardMedia
               component='img'
               sx={{ maxHeight: 350 }}
-              image={currentProduct.url}
+              image={`${import.meta.env.VITE_UNSPLASH_URL}${
+                currentProduct.name
+              }`}
               title={currentProduct.name}
             />
             <CardContent
@@ -53,7 +76,7 @@ export default function ActiveProduct({ product }) {
                 component='div'
                 color='text.secondary'
               >
-                In Stock: {currentProduct.inventory}
+                In Stock: {currentProduct.inStock}
               </Typography>
               <Typography variant='h6'>${currentProduct.price}</Typography>
             </CardContent>
@@ -63,6 +86,14 @@ export default function ActiveProduct({ product }) {
           className='blue'
           variant='primary'
           sx={{ width: '70%', maxWidth: 600 }}
+          onClick={() => {
+            dispatch(addToCart(currentProduct));
+            let item = { ...currentProduct };
+            item.inStock = item.inStock - 1;
+            dispatch(asyncUpdateProduct(item)).then(data =>
+              dispatch(updateProduct(data))
+            );
+          }}
         >
           BUY
         </Button>
@@ -77,9 +108,43 @@ export default function ActiveProduct({ product }) {
         >
           <Box>
             <Typography variant='h4'>Related Items</Typography>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              {[1, 2, 3].map(number => (
+                <Item
+                  key={number}
+                  elevation={number}
+                >
+                  {`Related Item ${number}`}
+                </Item>
+              ))}
+            </Box>
           </Box>
           <Box mt={3}>
             <Typography variant='h4'>Product Details</Typography>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls='panel1a-content'
+                id='panel1a-header'
+              >
+                <Typography>Specifications</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>Products Specs.</Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls='panel2a-content'
+                id='panel2a-header'
+              >
+                <Typography>User Reviews</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>Product Reviews...</Typography>
+              </AccordionDetails>
+            </Accordion>
           </Box>
         </Container>
       </Box>

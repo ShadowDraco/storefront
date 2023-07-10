@@ -5,10 +5,11 @@ const cart = (state = initialCart, action) => {
     case 'add':
       return [...state, action.payload];
     case 'remove':
-      const stateCopy = [...state];
-      const newState = stateCopy.filter(
+      // add one back to quantity if removed from cart
+      const newState = [...state].filter(
         item => item.name !== action.payload.name
       );
+
       return newState;
     default:
       return state;

@@ -1,14 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { chooseCategory } from '../../redux/reducers/categories';
+import {
+  chooseCategory,
+  fetchCategories,
+  updateCategories,
+} from '../../redux/reducers/categories';
 
 import { ButtonGroup, Button, Box, Typography, Container } from '@mui/material';
 
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 export default function Categories() {
-  const chosenCategory = useSelector(state => state.categories.chosenCategory);
+  const chosenCategory = useSelector(state => state.chosenCategory);
   const categories = useSelector(state => state.categories);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories()).then(data => {
+      dispatch(updateCategories(data));
+    });
+  }, []);
 
   return (
     <>
@@ -18,24 +29,16 @@ export default function Categories() {
           variant='text'
           aria-label='text button group'
         >
-          {Object.entries(categories).map((category, i) => {
-            return category[0] === 'chosenCategory' ? (
-              ''
-            ) : (
+          {categories.map((category, i) => {
+            return (
               <Button
-                id={chosenCategory.index === i ? 'active' : ''}
+                id={chosenCategory === i ? 'active' : ''}
                 key={i}
                 onClick={() => {
-                  dispatch(
-                    chooseCategory({
-                      index: i,
-                      string: category[0],
-                      description: category[1],
-                    })
-                  );
+                  dispatch(chooseCategory(i));
                 }}
               >
-                {category[0]}
+                {`${category.name}`.toUpperCase()}
               </Button>
             );
           })}
@@ -43,18 +46,19 @@ export default function Categories() {
       </Box>
       <Container sx={{ textAlign: 'center' }}>
         <Typography
-          variant='h3'
+          variant='h2'
           mt={8}
+          gutterBottom
           data-testid='CATEGORY'
         >
-          {chosenCategory.string}
+          {categories[chosenCategory].name.toUpperCase()}
         </Typography>
         <Typography
           variant='h6'
           color='darkgray'
           mb={8}
         >
-          {chosenCategory.description}
+          {categories[chosenCategory].description}
         </Typography>
       </Container>
     </>

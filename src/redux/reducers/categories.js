@@ -1,47 +1,38 @@
-export const initialCategories = {
-  ELECTRONICS: 'Tvs, laptops and more!',
-  FOOD: 'Everything tasty and savory',
-  chosenCategory: {
-    index: 0,
-    string: 'ELECTRONICS',
-    description: 'Tvs, laptops and more!',
+import axios from 'axios';
+import {
+  createAction,
+  createReducer,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+
+export const initialCategories = [
+  { name: 'electronics', description: 'Tvs, laptops and more!' },
+  { name: 'food', description: 'Everything tasty and savory' },
+];
+
+export const initialChosenCategory = 0;
+
+export const chooseCategory = createAction('chooseCategory');
+export const updateCategories = createAction('updateCategories');
+
+export const categories = createReducer(initialCategories, {
+  [updateCategories]: (state, action) => {
+    return action.payload.payload.results;
   },
-};
+});
 
-const categories = (state = initialCategories, action) => {
-  switch (action.type) {
-    case 'updateCategories':
-      return categoryUpdate(state, action);
-    case 'chooseCategory':
-      return { ...state, chosenCategory: action.payload };
-    default:
-      return state;
+export const chosenCategory = createReducer(initialChosenCategory, {
+  [chooseCategory]: (state, action) => {
+    return action.payload;
+  },
+});
+
+export const fetchCategories = createAsyncThunk(
+  'updateCategories',
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/categories`
+    );
+    return response.data;
   }
-};
-
-//? unused because not required
-const categoryUpdate = (state, action) => {
-  const stateCopy = { ...state };
-  stateCopy[action.payload.productType] = [
-    state[action.payload.productType],
-    action.payload,
-  ];
- 
-  return stateCopy;
-};
-
-export const updateCategories = newCategory => {
-  return {
-    type: 'updateCategories',
-    payload: newCategory,
-  };
-};
-
-export const chooseCategory = category => {
-  return {
-    type: 'chooseCategory',
-    payload: category,
-  };
-};
-
-export default categories;
+);
