@@ -1,20 +1,21 @@
-import { legacy_createStore as createStore, combineReducers } from 'redux';
+import { combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import products from './reducers/products';
-import categories from './reducers/categories';
+import { categories, chosenCategory } from './reducers/categories';
 import currentProduct from './reducers/currentProduct';
 import cart from './reducers/cart';
-import { composeWithDevTools } from '@redux-devtools/extension';
 
 const reducers = combineReducers({
   products,
   categories,
+  chosenCategory,
   currentProduct,
   cart,
 });
 
 const store = () => {
-  return createStore(reducers, composeWithDevTools());
+  return configureStore({ reducer: reducers });
 };
 
 export default store();

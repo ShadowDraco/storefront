@@ -53,7 +53,7 @@ export default function ActiveProduct({ product }) {
                 component='div'
                 color='text.secondary'
               >
-                In Stock: {currentProduct.inventory}
+                In Stock: {currentProduct.inStock}
               </Typography>
               <Typography variant='h6'>${currentProduct.price}</Typography>
             </CardContent>
