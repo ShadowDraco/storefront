@@ -43,6 +43,13 @@ Connecting the Virtual Store to a live API so that data is persistent and able t
 - As a user, I want to interact with live inventory so that I have confidence that the displayed products are in stock.
 - As a user, I want to know to that when I add an item to my cart, that it is removed from inventory so that no other users can purchase it.
 
+### Phase 4 Requirements
+
+Completing work on the Virtual Store by adding two full page views to the application: Product Details and Checkout.
+
+- As a user, I want to see a full detail view of a product so that I can make a more informed choice about purchasing it.
+- As a user, I want to view my full cart and initiate the checkout process so that I can purchase my items and have them delivered.
+
 ### Application Architecture
 
 Virtual Store application using Vite, Material UI, and React-redux:
@@ -57,7 +64,12 @@ Virtual Store application using Vite, Material UI, and React-redux:
 - A `<SimpleCart />` component:
   - Displays a short list (title only) of products in the cart.
     This should be present at all times.
+- A `<ActiveProduct />` component:
+  - Shows Details about selected product.
+- A `<CartPage />` component:
+  - Checkout page with details about the cart.
 
 ### Testing
 
 - Tests are accomplished by using Vitest and react testing library.
+- Tests check that components render with proper wording and that redux state is compatible at minimum
