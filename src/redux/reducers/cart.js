@@ -1,16 +1,18 @@
-export const initialCart = [];
+export const initialCart = { cart: [], showPage: false };
 
 const cart = (state = initialCart, action) => {
   switch (action.type) {
     case 'add':
-      return [...state, action.payload];
+      return { ...state, cart: [...state.cart, action.payload] };
     case 'remove':
       // add one back to quantity if removed from cart
-      const newState = [...state].filter(
+      let newCart = { ...state }.cart.filter(
         item => item.name !== action.payload.name
       );
 
-      return newState;
+      return { ...state, cart: newCart };
+    case 'toggle':
+      return { ...state, showPage: action.payload };
     default:
       return state;
   }
@@ -27,6 +29,13 @@ export const removeFromCart = item => {
   return {
     type: 'remove',
     payload: item,
+  };
+};
+
+export const showPage = bool => {
+  return {
+    type: 'toggle',
+    payload: bool,
   };
 };
 

@@ -18,6 +18,7 @@ import {
   Typography,
   Box,
   CircularProgress,
+  Link,
 } from '@mui/material';
 import { setCurrentProduct } from '../../redux/reducers/currentProduct';
 import { addToCart } from '../../redux/reducers/cart';
@@ -30,7 +31,6 @@ export default function Products() {
   const categories = useSelector(state => state.categories);
   const chosenCategory = useSelector(state => state.chosenCategory);
   const products = useSelector(state => state.products);
-
   const dispatch = useDispatch();
 
   return (
@@ -75,21 +75,27 @@ export default function Products() {
                       dispatch(addToCart(product));
                       let item = { ...product };
                       item.inStock = item.inStock - 1;
-                      dispatch(asyncUpdateProduct(item)).then(data =>
-                        dispatch(updateProduct(data))
-                      );
+                      dispatch(asyncUpdateProduct(item)).then(data => {
+                        dispatch(updateProduct(data));
+                      });
                     }}
                   >
                     ADD TO CART
                   </Button>
-                  <Button
-                    size='small'
-                    onClick={() => {
-                      dispatch(setCurrentProduct(product));
-                    }}
+                  <Link
+                    href={`/product/${product._id}`}
+                    underline='none'
+                    color='black'
                   >
-                    VIEW DETAILS
-                  </Button>
+                    <Button
+                      size='small'
+                      onClick={() => {
+                        dispatch(setCurrentProduct(product));
+                      }}
+                    >
+                      VIEW DETAILS
+                    </Button>
+                  </Link>
                 </CardActions>
               </Card>
             ) : (

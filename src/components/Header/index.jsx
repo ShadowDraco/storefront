@@ -1,10 +1,12 @@
-import { Typography, AppBar, Toolbar, Button } from '@mui/material';
+import { Typography, AppBar, Toolbar, Button, Link } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentProduct } from '../../redux/reducers/currentProduct';
+import { showPage } from '../../redux/reducers/cart';
 
 export default function Header() {
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart.cart);
+
   return (
     <>
       <AppBar
@@ -14,16 +16,36 @@ export default function Header() {
         <Toolbar
           sx={{ display: 'flex', justifyContent: 'space-between', flexGrow: 1 }}
         >
-          <Typography
-            id='OURSTORE'
-            variant='h4'
-            onClick={() => {
-              dispatch(setCurrentProduct({}));
-            }}
+          <Link
+            href='/'
+            underline='none'
+            color='black'
           >
-            OUR STORE
-          </Typography>
-          <Button color='inherit'>Cart ({cart.length})</Button>
+            <Typography
+              id='OURSTORE'
+              variant='h4'
+              onClick={() => {
+                dispatch(setCurrentProduct({}));
+                dispatch(showPage(false));
+              }}
+            >
+              OUR STORE
+            </Typography>
+          </Link>
+          <Link
+            href='/cart'
+            underline='none'
+            color='black'
+          >
+            <Button
+              color='inherit'
+              onClick={() => {
+                dispatch(showPage(true));
+              }}
+            >
+              Cart ({cart?.length})
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </>

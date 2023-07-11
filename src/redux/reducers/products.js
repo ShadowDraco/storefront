@@ -10,6 +10,7 @@ export const initialProducts = {
   loading: true,
 };
 
+export const getCurrentProduct = createAction('getCurrentProduct');
 export const updateProduct = createAction('updateProduct');
 export const updateProducts = createAction('updateProducts');
 export const getProducts = createAction('getProducts');
@@ -27,11 +28,28 @@ export const products = createReducer(initialProducts, {
   [getProducts]: (state, action) => {
     return action.payload.payload.results;
   },
+  [getCurrentProduct]: (state, action) => {
+    return {
+      ...state,
+      currentProduct: action.payload.results.filter(
+        item => item._id === action.payload.id
+      )[0],
+    };
+  },
 });
+
+export const setCurrentProduct = createAsyncThunk(
+  getCurrentProduct,
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/products`
+    );
+    return response.data;
+  }
+);
 
 export const fetchProducts = createAsyncThunk(getProducts, async () => {
   const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-
   return response.data;
 });
 
@@ -42,6 +60,7 @@ export const asyncUpdateProduct = createAsyncThunk(
       `${import.meta.env.VITE_API_URL}/products/${item._id}`,
       { inStock: item.inStock }
     );
+
     return response.data;
   }
 );
