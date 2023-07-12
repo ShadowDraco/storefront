@@ -41,27 +41,41 @@ export const products = createReducer(initialProducts, {
 export const setCurrentProduct = createAsyncThunk(
   getCurrentProduct,
   async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/products`
-    );
-    return response.data;
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/products`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error setting current product', error);
+    }
   }
 );
 
 export const fetchProducts = createAsyncThunk(getProducts, async () => {
-  const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-  return response.data;
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/products`
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Products', error);
+  }
 });
 
 export const asyncUpdateProduct = createAsyncThunk(
   updateProduct,
   async item => {
-    const response = await axios.put(
-      `${import.meta.env.VITE_API_URL}/products/${item._id}`,
-      { inStock: item.inStock }
-    );
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/products/${item._id}`,
+        { inStock: item.inStock }
+      );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      console.error('Error Updating Product', error);
+    }
   }
 );
 
