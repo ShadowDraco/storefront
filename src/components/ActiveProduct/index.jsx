@@ -42,11 +42,15 @@ export default function ActiveProduct({ product }) {
 
   useEffect(() => {
     if (!product) {
-      dispatch(setCurrentProduct()).then(data =>
-        dispatch(
-          getCurrentProduct({ results: data.payload.results, id: params.id })
-        )
-      );
+      try {
+        dispatch(setCurrentProduct()).then(data =>
+          dispatch(
+            getCurrentProduct({ results: data.payload.results, id: params.id })
+          )
+        );
+      } catch (error) {
+        console.error('Error in ActiveProduct UseEffect', error);
+      }
     }
   }, [params.id]);
 

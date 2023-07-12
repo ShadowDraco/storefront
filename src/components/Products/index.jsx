@@ -26,7 +26,11 @@ import { addToCart } from '../../redux/reducers/cart';
 export default function Products({ testCategories, testProducts }) {
   useEffect(() => {
     if (!testProducts) {
-      dispatch(fetchProducts()).then(data => dispatch(getProducts(data)));
+      try {
+        dispatch(fetchProducts()).then(data => dispatch(getProducts(data)));
+      } catch (error) {
+        console.error('Error in Products UseEffect', error);
+      }
     }
   }, []);
 

@@ -19,9 +19,13 @@ export default function Categories({ testCategories }) {
 
   useEffect(() => {
     if (!testCategories) {
-      dispatch(fetchCategories()).then(data => {
-        dispatch(updateCategories(data));
-      });
+      try {
+        dispatch(fetchCategories()).then(data => {
+          dispatch(updateCategories(data));
+        });
+      } catch (error) {
+        console.error('Error in Categories UseEffect', error);
+      }
     }
   }, []);
 
