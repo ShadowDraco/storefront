@@ -7,9 +7,9 @@ test('renders selected product card', () => {
   const product = {
     name: 'TV',
     description: 'See all the things',
-    url: `${import.meta.env.VITE_UNSPLASH_URL}tv`,
+    url: `https://source.unsplash.com/random?tv`,
     price: 600,
-    inventory: Math.random() * 20 + 10,
+    inStock: Math.random() * 20 + 10,
   };
   render(
     <Provider store={store}>

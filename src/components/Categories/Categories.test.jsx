@@ -2,15 +2,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Categories from '../Categories';
 import store from '../../redux/store';
 import { Provider } from 'react-redux';
+import { initialCategories } from '../../redux/reducers/categories';
 
 test('renders main title', () => {
-  const mockFunction = parameter => {
-    return parameter;
-  };
-
   render(
     <Provider store={store}>
-      <Categories setChosenCategory={mockFunction} />
+      <Categories testCategories={initialCategories} />
     </Provider>
   );
 

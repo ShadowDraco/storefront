@@ -10,15 +10,24 @@ import { ButtonGroup, Button, Box, Typography, Container } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 
-export default function Categories() {
+export default function Categories({ testCategories }) {
   const chosenCategory = useSelector(state => state.chosenCategory);
-  const categories = useSelector(state => state.categories);
+  const categories = testCategories
+    ? testCategories
+    : useSelector(state => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories()).then(data => {
-      dispatch(updateCategories(data));
-    });
+    if (typeof testCategories === undefined) {
+      console.log('\n\nNO TEST CATEGORY ', testCategories);
+      try {
+        dispatch(fetchCategories()).then(data => {
+          dispatch(updateCategories(data));
+        });
+      } catch (error) {
+        console.error('Error in Categories UseEffect', error);
+      }
+    }
   }, []);
 
   return (

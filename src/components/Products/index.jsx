@@ -23,14 +23,24 @@ import {
 import { setCurrentProduct } from '../../redux/reducers/currentProduct';
 import { addToCart } from '../../redux/reducers/cart';
 
-export default function Products() {
+export default function Products({ testCategories, testProducts }) {
   useEffect(() => {
-    dispatch(fetchProducts()).then(data => dispatch(getProducts(data)));
+    if (typeof testProducts === undefined) {
+      try {
+        dispatch(fetchProducts()).then(data => dispatch(getProducts(data)));
+      } catch (error) {
+        console.error('Error in Products UseEffect', error);
+      }
+    }
   }, []);
 
-  const categories = useSelector(state => state.categories);
+  const categories = testCategories
+    ? testCategories
+    : useSelector(state => state.categories);
   const chosenCategory = useSelector(state => state.chosenCategory);
-  const products = useSelector(state => state.products);
+  const products = testProducts
+    ? testProducts
+    : useSelector(state => state.products);
   const dispatch = useDispatch();
 
   return (

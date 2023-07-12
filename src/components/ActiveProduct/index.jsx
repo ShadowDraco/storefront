@@ -41,11 +41,18 @@ export default function ActiveProduct({ product }) {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(setCurrentProduct()).then(data =>
-      dispatch(
-        getCurrentProduct({ results: data.payload.results, id: params.id })
-      )
-    );
+    if (typeof product === undefined) {
+      console.log('\n\nNO TEST ACTIVE PRODUCT ', product);
+      try {
+        dispatch(setCurrentProduct()).then(data =>
+          dispatch(
+            getCurrentProduct({ results: data.payload.results, id: params.id })
+          )
+        );
+      } catch (error) {
+        console.error('Error in ActiveProduct UseEffect', error);
+      }
+    }
   }, [params.id]);
 
   const currentProduct = product
@@ -53,7 +60,6 @@ export default function ActiveProduct({ product }) {
     : useSelector(state => state.products.currentProduct);
   const dispatch = useDispatch();
 
-  
   return (
     currentProduct && (
       <Box mb={10}>
