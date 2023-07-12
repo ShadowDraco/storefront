@@ -10,7 +10,7 @@ import CartPage from './components/CartPage';
 import StoreFront from './components/StoreFront';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
+function App({ testProducts, testCategories }) {
   return (
     <Box>
       <Header />
@@ -19,7 +19,12 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<StoreFront />}
+            element={
+              <StoreFront
+                testProducts={testProducts}
+                testCategories={testCategories}
+              />
+            }
           />
           <Route
             path='/cart'

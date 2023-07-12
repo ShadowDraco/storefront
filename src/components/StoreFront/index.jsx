@@ -7,12 +7,12 @@ import { Container } from '@mui/material';
 
 import Cart from '../Cart';
 
-export default function StoreFront() {
+export default function StoreFront({ testProducts, testCategories }) {
   return (
     <Container>
       <Cart />
-      <Categories />
-      <Products />
+      <Categories testCategories={testCategories} />
+      <Products testProducts={testProducts} />
     </Container>
   );
 }
