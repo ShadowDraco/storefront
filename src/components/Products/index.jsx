@@ -25,7 +25,7 @@ import { addToCart } from '../../redux/reducers/cart';
 
 export default function Products({ testCategories, testProducts }) {
   useEffect(() => {
-    if (typeof testProducts === undefined) {
+    if (typeof testProducts !== undefined) {
       try {
         dispatch(fetchProducts()).then(data => dispatch(getProducts(data)));
       } catch (error) {
