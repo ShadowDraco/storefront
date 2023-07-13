@@ -31,12 +31,12 @@ export const fetchCategories = createAsyncThunk(
   'updateCategories',
   async () => {
     try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/categories`
-    );
-    return response.data;
-    } catch(error) {
-      console.error('Error fetching Categories', error)
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/categories`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching Categories', error);
     }
   }
 );

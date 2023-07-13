@@ -18,8 +18,7 @@ export default function Categories({ testCategories }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (typeof testCategories === undefined) {
-      console.log('\n\nNO TEST CATEGORY ', testCategories);
+    if (typeof testCategories !== undefined) {
       try {
         dispatch(fetchCategories()).then(data => {
           dispatch(updateCategories(data));

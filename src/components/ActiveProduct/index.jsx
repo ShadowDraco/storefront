@@ -41,8 +41,7 @@ export default function ActiveProduct({ product }) {
   const params = useParams();
 
   useEffect(() => {
-    if (typeof product === undefined) {
-      console.log('\n\nNO TEST ACTIVE PRODUCT ', product);
+    if (typeof product !== undefined) {
       try {
         dispatch(setCurrentProduct()).then(data =>
           dispatch(
