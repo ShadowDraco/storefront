@@ -14,6 +14,8 @@
 
 4 day LAB build of the **storefront application**, written in React. using React Redux and Material UI.
 
+  <img src="https://skillicons.dev/icons?i=js,react,redux,vite,html,css,sass,materialui,githubactions,vscode&perline=12" />
+
 ### Phase 1 Requirements
 
 - As a user, I expect to see a list of available product categories in the store so that I can easily browse products.
